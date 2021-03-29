@@ -1,0 +1,86 @@
+view "view1" {
+	match-clients { 10.113.1.0/25; };
+
+	zone "view.0816146.nasa." {
+		type master;
+		file "/etc/bind/dbs/db.view1.signed";
+	};
+
+	zone "0816146.nasa." {
+		type slave;
+		masters { 10.113.22.1; };
+		file "db.sean.view1";
+	};
+
+	zone "22.113.10.in-addr.arpa." {
+		type master;
+		file "/etc/bind/dbs/db.rev.view1";
+	};
+
+	zone "nasa." {
+		type slave;
+		masters { 10.113.0.254; };
+		file "db.nasa.view1";
+	};
+};
+
+view "view22" {
+	match-clients { localhost; 10.113.22.0/24; };
+
+	zone "view.0816146.nasa." {
+		type master;
+		file "/etc/bind/dbs/db.view22.signed";
+	};
+
+	zone "0816146.nasa." {
+		type master;
+		file "/etc/bind/dbs/db.nasa.signed";
+		allow-update { none; };
+	};
+
+	zone "22.113.10.in-addr.arpa." {
+		type master;
+		file "/etc/bind/dbs/db.rev.view22";
+	};
+
+	zone "nasa." {
+		type slave;
+		masters { 10.113.0.254; };
+		file "db.nasa.view22";
+	};
+};
+
+view "view87" {
+	match-clients { any; };
+
+	zone "view.0816146.nasa." {
+		type master;
+		file "/etc/bind/dbs/db.view87.signed";
+	};
+
+	zone "0816146.nasa." {
+		type slave;
+		masters { 10.113.22.1; };
+		file "db.sean.view87";
+	};
+
+	zone "22.113.10.in-addr.arpa." {
+		type master;
+		file "/etc/bind/dbs/db.rev.view87";
+	};
+
+	zone "nasa." {
+		type slave;
+		masters { 10.113.0.254; };
+		file "db.nasa.view87";
+	};
+};
+
+view "chaos" CH {
+	match-clients { !10.113.22.0/24; any; };
+
+	zone "bind." CH {
+		type master;
+		file "/etc/bind/dbs/db.empty.ch";
+	};
+};

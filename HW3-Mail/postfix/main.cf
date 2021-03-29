@@ -1,0 +1,92 @@
+# See /usr/share/postfix/main.cf.dist for a commented, more complete version
+
+
+# Debian specific:  Specifying a file name will cause the first
+# line of that file to be used as the name.  The Debian default
+# is /etc/mailname.
+#myorigin = /etc/mailname
+
+smtpd_banner = Hey there, here is Sean's Mail server.
+biff = no
+
+# appending .domain is the MUA's job.
+append_dot_mydomain = no
+
+# Uncomment the next line to generate "delayed mail" warnings
+#delay_warning_time = 4h
+
+readme_directory = no
+
+# See http://www.postfix.org/COMPATIBILITY_README.html -- default to 2 on
+# fresh installs.
+compatibility_level = 2
+
+# TLS parameters
+smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+smtpd_use_tls=yes
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+
+# See /usr/share/doc/postfix/TLS_README.gz in the postfix-doc package for
+# information on enabling SSL in the smtp client.
+
+smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+myhostname = mail.0816146.nasa
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+myorigin = /etc/mailname
+mydestination =
+relayhost = 
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+mailbox_size_limit = 0
+recipient_delimiter = +
+inet_interfaces = all
+inet_protocols = all
+
+# Postgrey: 10023 port
+smtpd_recipient_restrictions =
+	permit_sasl_authenticated,
+	permit_mynetworks,
+	reject_unauth_destination,
+	reject_invalid_hostname,
+	reject_non_fqdn_sender,
+	reject_non_fqdn_recipient,
+	reject_unknown_recipient_domain,
+	check_policy_service inet:127.0.0.1:10023,
+	check_policy_service unix:private/spf-policy
+#	reject_unknown_sender_domain,
+
+smtpd_sender_restrictions =
+	reject_authenticated_sender_login_mismatch
+	check_sender_access hash:/etc/postfix/sender_access
+
+smtpd_sender_login_maps = regexp:/etc/postfix/login_maps
+
+masquerade_domains = 0816146.nasa
+masquerade_exceptions = root
+canonical_maps = hash:/etc/postfix/canonical_map
+sender_canonical_maps = hash:/etc/postfix/canonical_map
+
+smtpd_sasl_auth_enable = yes
+smtpd_tls_security_level = encrypt
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+
+virtual_mailbox_domains = 0816146.nasa, mail.0816146.nasa
+virtual_mailbox_base = /var/mail/vhosts
+virtual_mailbox_maps = hash:/etc/postfix/vmailbox
+virtual_minimum_uid = 100
+virtual_uid_maps = static:5000
+virtual_gid_maps = static:5000
+virtual_alias_maps = regexp:/etc/postfix/virtual_maps
+smtp_generic_maps = hash:/etc/postfix/canonical_map
+
+always_bcc = bcc@0816146.nasa
+
+# Open DKIM: 8892 port
+# Open DMARC: 8894 port
+smtpd_milters = inet:127.0.0.1:8892, inet:127.0.0.1:8894
+non_smtpd_milters = $smtpd_milters
+
+header_checks = regexp:/etc/postfix/header_checks

@@ -1,0 +1,16 @@
+$TTL 30
+$ORIGIN view.0816146.nasa.
+$INCLUDE "/etc/bind/keys/Kview.0816146.nasa.KSK.key"
+$INCLUDE "/etc/bind/keys/Kview.0816146.nasa.ZSK.key"
+
+@	IN	SOA	sean.taipei.	na.sean.taipei. (
+			2020061000	; Serial
+			1M	; Refresh
+			1M	; Retry
+			1M	; Expire
+			1M )	; Negative Cache TTL
+
+@	IN	NS	ns1.0816146.nasa.
+@	IN	NS	ns2.0816146.nasa.
+
+@	IN	A	10.113.22.87

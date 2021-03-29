@@ -1,0 +1,21 @@
+$TTL 30
+$ORIGIN 22.113.10.in-addr.arpa.
+@	IN	SOA	sean.taipei.	na.sean.taipei. (
+			2020052100	; Serial
+			1H		; Refresh
+			1M		; Retry
+			6H		; Expire
+			5M )		; Negative Cache TTL
+
+@	IN	NS	ns1.0816146.nasa.
+@	IN	NS	ns2.0816146.nasa.
+
+1	IN	PTR	ns1.0816146.nasa.
+2	IN	PTR	ns2.0816146.nasa.
+25	IN	PTR	mail.0816146.nasa.
+80	IN	PTR	0816146.nasa.
+89	IN	PTR	ldap1.0816146.nasa.
+129	IN	PTR	agent.0816146.nasa.
+161	IN	PTR	ws1.0816146.nasa.
+254	IN	PTR	router.0816146.nasa.
+87	IN	PTR	view.0816146.nasa.

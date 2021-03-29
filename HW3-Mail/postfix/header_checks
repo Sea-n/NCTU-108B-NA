@@ -1,0 +1,3 @@
+/Subject:.*wuhan/ REJECT
+/Subject:.*肺炎/  REJECT
+/Subject:.*6IK654KO/  REJECT

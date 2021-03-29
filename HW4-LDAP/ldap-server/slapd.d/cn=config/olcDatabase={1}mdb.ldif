@@ -1,0 +1,36 @@
+# AUTO-GENERATED FILE - DO NOT EDIT!! Use ldapmodify.
+# CRC32 d7405187
+dn: olcDatabase={1}mdb
+objectClass: olcDatabaseConfig
+objectClass: olcMdbConfig
+olcDatabase: {1}mdb
+olcDbDirectory: /var/lib/ldap
+olcSuffix: dc=0816146,dc=nasa
+olcAccess: {0}to attrs=userPassword
+  by self write
+  by anonymous auth
+  by * none
+olcAccess: {1}to attrs=shadowLastChange
+  by self write by * read
+olcAccess: {2}to attrs=ludouCredit
+  by dn.exact=cn=TA,ou=People,dc=0816146,dc=nasa write
+  by * read
+olcAccess: {3}to *
+  by dn.exact=gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth write
+  by * read
+olcLastMod: TRUE
+olcRootDN: cn=admin,dc=0816146,dc=nasa
+olcDbCheckpoint: 512 30
+olcDbIndex: objectClass eq
+olcDbIndex: cn,uid eq
+olcDbIndex: uidNumber,gidNumber eq
+olcDbIndex: member,memberUid eq
+olcDbMaxSize: 1073741824
+structuralObjectClass: olcMdbConfig
+entryUUID: 8e0ea566-3e98-103a-82e8-130a88ac91ba
+creatorsName: cn=config
+createTimestamp: 20200609122906Z
+olcRootPW:: e1NTSEF9SGRZaURjNXVJVE5sRmpKdTBzNXZtQzU1NjNKSWY5cGQ=
+entryCSN: 20200610104817.243103Z#000000#000#000000
+modifiersName: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+modifyTimestamp: 20200610104817Z
